@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  tasks:
+
+  - name: Add Clarence Mills
+    user:
+      name: cmills
+      shell: /usr/bin/bash
+      state: present
+
+  - authorized_key: 
+      user: cmills 
+      key: "{{ lookup('file', '/home/cmills/.ssh/id_rsa.pub') }}"
