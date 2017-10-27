@@ -19,8 +19,8 @@ resource "aws_instance" "www-1" {
   }
 }
 
-resource "aws_eip" "cmils" {
-  instance = "${aws_instance.cmills.id}"
+resource "aws_eip" "cmills" {
+  instance = "${aws_instance.www-1.id}"
 }
 
 resource "aws_security_group" "web-sg" {
