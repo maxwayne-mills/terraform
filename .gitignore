@@ -1,3 +1,5 @@
 *.tfstate*
 .terraform
 *.rety
+private_ips.txt
+public_ips.txt
