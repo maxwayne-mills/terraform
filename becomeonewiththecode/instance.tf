@@ -5,14 +5,6 @@ resource "aws_vpc" "bcode" {
   }
 }
 
-resource "aws_subnet" "private-1" {
-  vpc_id      = "${aws_vpc.bcode.id}"
-  cidr_block  = "10.1.1.0/24"
-  tags {
-    Name = "private-1"
-  }
-}
-
 resource "aws_security_group" "access_web_sg" {
   name		= "web-instance-security-group"
   vpc_id  = "${aws_vpc.bcode.id}"
@@ -27,6 +19,25 @@ resource "aws_security_group" "access_web_sg" {
     to_port	= 22
     protocol	= "tcp"
    cidr_blocks	= ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_subnet" "private-1" {
+  vpc_id      = "${aws_vpc.bcode.id}"
+  cidr_block  = "10.1.1.0/24"
+  map_public_ip_on_launch = true
+  tags {
+    Name = "private-1"
+  }
+}
+
+resource "aws_subnet" "public-1" {
+  vpc_id  = "${aws_vpc.bcode.id}"
+  cidr_block = "10.1.2.0/24"
+  map_public_ip_on_launch = true
+  availability_zone = "ca-central-1b"
+  tags {
+    Name = "public-1"
   }
 }
 
