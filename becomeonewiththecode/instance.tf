@@ -1,6 +1,6 @@
 resource "aws_key_pair" "cmills" {
   key_name  = "cmills-key"
-  public_key  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDN+JBPWHbViSin0QhZwllakXSTjE+6memHlokEL4hKbIQIyETKv//iZVUCE1lDnc0uE73cDKS8HVHR4S3N2WWHzeuStWIDnirOHE4SW3GgeQfu1H1DikHf7E+PT8qJhQWtAYzEJyFf4vgPn/KuNhJFRWXmR3zK3gACZWP1ON9fymoBzi5MG9YM44JJnGoYM3CX7Aav/1DwIR5Sc1jRJ6uxJTsH1qv7EC81hjmvMAT+DscD5yx5yU28VJ3LM0p2RrRDaZcjXGYviXUoXufZl9MbKrsya9nRrL4wiUgECrgbkYy3XJNN4LYZT9oeRqqzyU3H9N33of7KhcR78fPbt6dxq56f+gSNHOsImTLPsbfKMoRg01j1Pi3ambAdBaA9XLKfCn4rCNXVmjJ8CGuYCf2SW8ur9DG/v43PVeZerhdQJ6Jgg6nilJoqUBA38B6cFFuyNkK1DH8wRq2b55khEEKCRUA3jcvz44N7VD4SJfWr9vDz0xlpUgKTMijDg3/5RHmS6yGfE9fw0CHucRMF1z6gYjyyjpPkDcceobnS+370efsF/qfKXao4bfkHm+vUSfZlz5KfuLjggYjZzmKTTM50oJyrHgcOpxUvqJH2OWKiTHX8bVdlh/amzrALqr1zCg0amMulKmU4K4ucGUwWUF/m6aMgwA42HtAHSEc35oF3GQ== oss@cmills-Kudu-Pro"
+  public_key  = "${var.my_key}"
 }
 
 resource "aws_vpc" "bcode" {
@@ -74,7 +74,7 @@ resource "aws_instance" "www-1" {
   subnet_id = "${aws_subnet.public-1.id}"
   security_groups = ["${aws_security_group.access_web_sg.id}"]
   key_name  = "cmills-key"
-  
+
   tags {
     Name = "www-1"
   }
