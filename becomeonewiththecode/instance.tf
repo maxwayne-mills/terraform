@@ -22,10 +22,26 @@ resource "aws_security_group" "access_web_sg" {
   }
 }
 
+resource "aws_internet_gateway" "internet_gateway" {
+  vpc_id  = "${aws_vpc.bcode.id}"
+}
+
+resource "aws_route_table" "outbound_route" {
+  vpc_id  = "${aws_vpc.bcode.id}"
+  route {
+    cidr_block  = "0.0.0.0/0"
+    gateway_id  = "${aws_internet_gateway.internet_gateway.id}"
+    }
+  tags {
+    Name  = "outbound_route"
+    }
+}
+
 resource "aws_subnet" "private-1" {
   vpc_id      = "${aws_vpc.bcode.id}"
   cidr_block  = "10.1.1.0/24"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false
+  availability_zone = "ca-central-1b"
   tags {
     Name = "private-1"
   }
@@ -41,10 +57,15 @@ resource "aws_subnet" "public-1" {
   }
 }
 
+resource "aws_route_table_association" "outbound_to_internet_gw" {
+  subnet_id = "${aws_subnet.public-1.id}"
+  route_table_id  = "${aws_route_table.outbound_route.id}"
+}
+
 resource "aws_instance" "www-1" {
   ami = "ami-13e45c77"
   instance_type = "t2.micro"
-  subnet_id = "${aws_subnet.private-1.id}"
+  subnet_id = "${aws_subnet.public-1.id}"
   security_groups = ["${aws_security_group.access_web_sg.id}"]
   tags {
     Name = "www-1"
