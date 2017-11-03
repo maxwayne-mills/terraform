@@ -28,7 +28,7 @@ resource "aws_security_group" "test_instance" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ## THis is needed as Terraform when creating a new Security Group inside a VPC, Terraform will remove the default egress rule. So it needs to be added
+  ## This is needed because Terraform when creating a new Security Group inside a VPC, will remove the default egress rule. So it needs to be added back
   egress {
     description = "allow all outbound traffic to the internet"
     from_port   = 0
