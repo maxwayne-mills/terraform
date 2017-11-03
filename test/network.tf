@@ -9,16 +9,28 @@ resource "aws_vpc" "test" {
 }
 
 resource "aws_security_group" "allow_ssh" {
-  name = "security-group allow_ssh"
+  name        = "security-group allow_ssh"
+  description = "Allow inbound ssh and allow all traffic out"
 
   ingress {
+    description = "allow port 22 inbound"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "allow port 80"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ## THis is needed as Terraform when creating a new Security Group inside a VPC, Terraform will remove the default egress rule. So it needs to be added
   egress {
+    description = "allow all outbound traffice to the internet"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
