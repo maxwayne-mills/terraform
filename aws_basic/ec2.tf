@@ -38,8 +38,5 @@ resource "aws_instance" "test_ec2" {
     Name = "Test instance"
   }
 
-  user_data = [
-    "apt-get update -y",
-    "apt-get -y install ansible",
-  ]
+  user_data = "apt-get update -y"
 }
