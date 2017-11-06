@@ -41,7 +41,11 @@ resource "aws_instance" "test_ec2" {
 
   user_data = <<-EOF
   #!/usr/bin/env bash
+  apt-get update
+  apt-get dist-upgrade
+  apt-get autoremove
   apt-get install -y python
+  apt-get install -y ansible
   EOF
 
   # user_data = "${file("initial_setup.sh")}"
