@@ -33,10 +33,26 @@ resource "aws_instance" "test_ec2" {
   instance_type          = "${var.instance_name}"
   key_name               = "cmills-key"
   vpc_security_group_ids = ["${aws_security_group.test_instance.id}"]
+  count                  = 1
 
   tags {
     Name = "Test instance"
   }
 
-  user_data = "apt-get update -y"
+  user_data = <<-EOF
+  #!/usr/bin/env bash
+  apt-get install -y python
+  EOF
+
+  # user_data = "${file("initial_setup.sh")}"
+
+  provisioner "local-exec" {
+    command = "echo web  ansible_host=${self.public_ip} > inventory"
+  }
+  provisioner "local-exec" {
+    command = "echo [defaults] > ansible.cfg"
+  }
+  provisioner "local-exec" {
+    command = "echo host_key_checking = False >> ansible.cfg"
+  }
 }
