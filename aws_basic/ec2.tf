@@ -28,8 +28,18 @@ resource "aws_security_group" "test_instance" {
   }
 }
 
+data "aws_ami" "mills-ami" {
+  most_recent = true
+  owners = ["self"]
+  filter {
+   name = "name"
+   values = ["oss-ami*"] 
+  }
+}
+
 resource "aws_instance" "test_ec2" {
-  ami                    = "${var.ami_name}"
+  #ami                    = "${var.ami_name}"
+  ami                    = "${data.aws_ami.mills-ami.id}"
   instance_type          = "${var.instance_name}"
   key_name               = "cmills-key"
   vpc_security_group_ids = ["${aws_security_group.test_instance.id}"]
