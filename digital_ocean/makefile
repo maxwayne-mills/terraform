@@ -10,7 +10,8 @@ do_token=$(DO_PAT)
 
 .title:
 	clear
-	@echo "Building Digital Ocean infrastructure\n"
+	@echo "Manage Digital Ocean infrastructure\n"
+	@sleep 2
 
 .plan: .title
 	@echo "Initializing environment"
@@ -18,12 +19,12 @@ do_token=$(DO_PAT)
 	@sleep 3
 
 	clear
-	@echo "Send build plan to file"
+	@echo "Create build plan to file"
 	$(tf) plan -out=$(planfile) -var "do_token=${DO_PAT}"
 	@sleep 3
 
 	clear
-	@echo "Send destroy plan to file"
+	@echo "Create destroy plan to file"
 	$(tf) plan -out=$(destroyfile) -var "do_token=${DO_PAT}"
 
 .cleanup:
@@ -35,4 +36,6 @@ all: .plan
 	$(tf) apply $(planfile)
 
 destroy: .title .cleanup
+	@clear
+	@echo "Destroying environment"
 	$(tf) destroy $(targetfile) --force -var "do_token=${DO_PAT}"
