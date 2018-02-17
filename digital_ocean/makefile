@@ -13,6 +13,13 @@ do_token=$(DO_PAT)
 	@echo "Manage Digital Ocean infrastructure\n"
 	@sleep 2
 
+.clone:
+	@clear
+	@echo "Cloning config management"
+	git clone https://github.com/maxwayne-mills/config-managment.git
+	@sleep 20
+	cp config-managment/ansible.cfg .
+
 .plan: .title
 	@echo "Initializing environment"
 	$(tf) init
@@ -29,8 +36,10 @@ do_token=$(DO_PAT)
 
 .cleanup:
 	@rm *.tfplan
+	@rm -rf config-managment
+	@rm ansible.cfg inventory
 
-all: .plan
+all: .clone .plan
 	@clear
 	@echo "Applying infrastructure"
 	$(tf) apply $(planfile)
@@ -39,3 +48,6 @@ destroy: .title .cleanup
 	@clear
 	@echo "Destroying environment"
 	$(tf) destroy $(targetfile) --force -var "do_token=${DO_PAT}"
+
+cleanup: .cleanup
+
