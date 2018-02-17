@@ -22,17 +22,20 @@ do_token=$(DO_PAT)
 
 .plan: .title
 	@echo "Initializing environment"
-	$(tf) init
+	@echo ""
+	@$(tf) init
 	@sleep 3
 
 	clear
 	@echo "Create build plan to file"
-	$(tf) plan -out=$(planfile) -var "do_token=${DO_PAT}"
+	@echo ""
+	@$(tf) plan -out=$(planfile) -var "do_token=${DO_PAT}"
 	@sleep 3
 
 	clear
 	@echo "Create destroy plan to file"
-	$(tf) plan -out=$(destroyfile) -var "do_token=${DO_PAT}"
+	@echo ""
+	@$(tf) plan -out=$(destroyfile) -var "do_token=${DO_PAT}"
 
 .cleanup:
 	@rm *.tfplan
@@ -42,12 +45,12 @@ do_token=$(DO_PAT)
 all: .clone .plan
 	@clear
 	@echo "Applying infrastructure"
-	$(tf) apply $(planfile)
+	@$(tf) apply $(planfile)
 
 destroy: .title .cleanup
 	@clear
 	@echo "Destroying environment"
-	$(tf) destroy $(targetfile) --force -var "do_token=${DO_PAT}"
+	@$(tf) destroy $(targetfile) --force -var "do_token=${DO_PAT}"
 
 cleanup: .cleanup
 
