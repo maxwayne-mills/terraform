@@ -9,7 +9,7 @@ destroyfile = terraform_destroy.tfplan
 do_token=$(DO_PAT)
 
 .title:
-	clear
+	@clear
 	@echo "Manage Digital Ocean infrastructure\n"
 	@sleep 2
 
@@ -26,13 +26,13 @@ do_token=$(DO_PAT)
 	@$(tf) init
 	@sleep 3
 
-	clear
+	@clear
 	@echo "Create build plan to file"
 	@echo ""
 	@$(tf) plan -out=$(planfile) -var "do_token=${DO_PAT}"
 	@sleep 3
 
-	clear
+	@Sclear
 	@echo "Create destroy plan to file"
 	@echo ""
 	@$(tf) plan -out=$(destroyfile) -var "do_token=${DO_PAT}"
@@ -50,7 +50,11 @@ all: .clone .plan
 destroy: .title .cleanup
 	@clear
 	@echo "Destroying environment"
+	@echo ""
 	@$(tf) destroy $(targetfile) --force -var "do_token=${DO_PAT}"
+	@echo " "
+	@echo "Cleaning up"
+	@echo ""
 
 cleanup: .cleanup
 
