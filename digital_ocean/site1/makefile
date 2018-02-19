@@ -20,12 +20,19 @@ do_token=$(DO_PAT)
 	@sleep 20
 	cp config-managment/ansible.cfg .
 
-.plan: .title
-	@echo "Initializing environment"
+.check:
+	@echo "Checking terraform files for conformity and correctness"
+	@$(tf) validate
+	@$(tf) fmt
+
+.int:
+	@echo "Initializing"
+	@echo "============"
 	@echo ""
-	@$(tf) init
+	@@$(tf) init
 	@sleep 3
 
+.plan: 
 	@clear
 	@echo "Create build plan to file"
 	@echo ""
@@ -43,7 +50,7 @@ do_token=$(DO_PAT)
 	@rm -rf config-managment
 	@rm ansible.cfg inventory
 
-all: .clone .plan
+all: .title .int .check .clone .plan
 	@clear
 	@echo "Applying infrastructure"
 	@$(tf) apply $(planfile)
@@ -59,4 +66,3 @@ destroy: .title
 	@echo ""
 
 clean: .cleanup
-
