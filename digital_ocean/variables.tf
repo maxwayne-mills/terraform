@@ -22,18 +22,3 @@ variable "region" {
     description = "Asset region"
     default = "nyc3"
 }
-
-variable "droplet_memory_size" {
-    description = "Droplet memory size"
-    default = "1gb"
-}
-
-variable "droplet_image" {
-    description = "Image name"
-    default = "ubuntu-14-04-x64"
-}
-
-variable "websrv_name" {
-    description = "web server name"
-    default = "web-server-1"
-}
