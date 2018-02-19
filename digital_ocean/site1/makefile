@@ -17,6 +17,7 @@ token=do_token=${DO_PAT}
 
 .clone:
 	@clear
+	@echo ""
 	@echo "Cloning config management"
 	@echo "========================="
 	@echo ""
@@ -29,6 +30,7 @@ token=do_token=${DO_PAT}
 	@cp config-managment/ansible.cfg .
 
 .check:
+	@echo ""
 	@echo "Checking terraform files for conformity and correctness"
 	@echo "======================================================="
 	@echo ""
