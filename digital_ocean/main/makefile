@@ -12,6 +12,10 @@ do_token=$(DO_PAT)
 	@clear
 	@echo "Manage Digital Ocean infrastructure\n"
 	@sleep 2
+.check:
+	@echo "Checking terraform files for conformity and correctness"
+	@$(tf) validate
+	@$(tf) fmt
 
 .plan: .title
 	@echo "Initializing environment"
@@ -34,7 +38,7 @@ do_token=$(DO_PAT)
 	@echo "Cleaning local environment"
 	@rm *.tfplan
 
-all: .plan
+all: .title .check .plan
 	@clear
 	@echo "Applying infrastructure"
 	@$(tf) apply $(planfile)
@@ -43,7 +47,8 @@ destroy: .title
 	@clear
 	@echo "Destroying environment"
 	@echo ""
-	@$(tf) destroy $(destroyfile) --force -var "do_token=${DO_PAT}"
+	#@$(tf) destroy $(destroyfile) --force -var "do_token=${DO_PAT}"
+	@$(tf) destroy --force -var "do_token=${DO_PAT}"
 	@echo " "
 	@echo "Cleaning up"
 	@echo ""
