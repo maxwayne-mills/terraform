@@ -7,6 +7,6 @@ resource "digitalocean_record" "millsresidence" {
   domain = "${digitalocean_domain.millsresidence.name}"
   type   = "A"
   name   = "www"
-  ttl    = "300"
+  ttl    = "30"
   value  = "${digitalocean_droplet.www1.ipv4_address}"
 }
