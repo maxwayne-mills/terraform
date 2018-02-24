@@ -7,6 +7,8 @@ tf = /home/cmills/bin/terraform
 planfile = terraform_plan.tfplan
 destroyfile = terraform_destroy.tfplan
 token=do_token=${DO_PAT}
+repo=https://github.com/maxwayne-mills/ansible.git
+repodir=ansible
 
 .title:
 	@clear
@@ -17,17 +19,18 @@ token=do_token=${DO_PAT}
 
 .clone:
 	@clear
+	if [ -d "$(repodir)" ]; then rm -rf "$(repodir)"; fi
 	@echo ""
 	@echo "Cloning config management"
 	@echo "========================="
 	@echo ""
-	@git clone https://github.com/maxwayne-mills/config-managment.git
+	@git clone $(repo)
 	@echo ""
 	@sleep 20
 	@echo "Copying Ansible configuration file"
 	@echo "=================================="
 	@echo ""
-	@cp config-managment/ansible.cfg .
+	@cp ansible/ansible.cfg .
 
 .check:
 	@echo ""
@@ -55,7 +58,7 @@ token=do_token=${DO_PAT}
 	@sleep 3
 
 	@echo ""
-	@echo "Create destroy plan to file"
+	@echo "Create destroy plan file"
 	@echo "==========================="
 	@echo ""
 	@$(tf) plan -out=$(destroyfile) -var "do_token=${DO_PAT}"
@@ -65,9 +68,12 @@ token=do_token=${DO_PAT}
 	@echo "Cleaning up local environment"
 	@echo "============================="
 	@echo ""
-	@rm -rf config-managment
-	@rm ansible.cfg inventory
-	@rm *.tfplan
+	@if [ -d $(repodir) ]; then rm -rf $(repodir); fi
+	@if [ -f ansible.cfg ]; then rm ansible.cfg; fi
+	@if [ -f inventory ]; then rm inventory; fi
+	@if [ -f *.tfplan* ]; then rm *.tfplan; fi
+	@if [ -f *.tfstate* ]; then rm *.tfplan; fi
+	@if [ -d .terraform ]; then rm -rf .terraform; fi
 
 all: .title .int .check .clone .plan
 	@clear
