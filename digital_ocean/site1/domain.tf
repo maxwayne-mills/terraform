@@ -18,3 +18,17 @@ resource "digitalocean_record" "domain_record2" {
   ttl    = "${var.ttl_life}"
   value  = "${digitalocean_droplet.www1.ipv4_address}"
 }
+
+# Second domain 
+resource "digitalocean_domain" "domain_name2" {
+  name       = "${var.web_domain2}"
+  ip_address = "${digitalocean_droplet.www1.ipv4_address}"
+}
+
+resource "digitalocean_record" "domain_record4" {
+  domain = "${digitalocean_domain.domain_name2.name}"
+  type   = "A"
+  name   = "www"
+  ttl    = "${var.ttl_life}"
+  value  = "${digitalocean_droplet.www1.ipv4_address}"
+}
