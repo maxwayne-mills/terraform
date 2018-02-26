@@ -57,23 +57,16 @@ repodir=ansible
 	@$(tf) plan -out=$(planfile) -var "do_token=${DO_PAT}"
 	@sleep 3
 
-	@echo ""
-	@echo "Create destroy plan file"
-	@echo "==========================="
-	@echo ""
-	@$(tf) plan -out=$(destroyfile) -var "do_token=${DO_PAT}"
-	@$(tf) plan -out=$(destroyfile) -var $(token)
-
 .cleanup:
 	@echo "Cleaning up local environment"
 	@echo "============================="
-	@echo ""
 	@if [ -d $(repodir) ]; then rm -rf $(repodir); fi
 	@if [ -f ansible.cfg ]; then rm ansible.cfg; fi
 	@if [ -f inventory ]; then rm inventory; fi
-	@if [ -f *.tfplan* ]; then rm *.tfplan; fi
-	@if [ -f *.tfstate* ]; then rm *.tfplan; fi
+	@if [ -f .tfplan ]; then rm *.tfplan.*; fi
+	@if [ -f .tfstate ]; then rm *.tfstate*; fi
 	@if [ -d .terraform ]; then rm -rf .terraform; fi
+	@echo "cleanup completed"
 
 all: .title .int .check .clone .plan
 	@clear
