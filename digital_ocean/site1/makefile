@@ -94,3 +94,5 @@ destroy: .title
 clean: .cleanup
 
 validate: .int .check 
+
+plan: .plan
