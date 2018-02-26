@@ -50,5 +50,5 @@ variable "web_domain" {
 
 variable "web_domain2" {
   description = "Domain name"
-  default     = "millsresidence.com"
+  default     = "toolsforthecloud.com"
 }
