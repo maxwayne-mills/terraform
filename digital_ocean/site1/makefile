@@ -75,9 +75,9 @@ all: .title .int .check .clone .plan
 	@echo ""
 	@$(tf) apply $(planfile)
 
-redo: .title .check 
+update: .title .check 
 	@clear
-	@echo "Applying infrastructure"
+	@echo "Updating infrastructure"
 	@echo "======================="
 	@echo ""
 	@$(tf) apply -var "do_token=${DO_PAT}"
@@ -92,3 +92,5 @@ destroy: .title
 	@echo ""
 
 clean: .cleanup
+
+validate: .int .check 
