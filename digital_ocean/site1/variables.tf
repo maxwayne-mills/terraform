@@ -37,3 +37,18 @@ variable "websrv_name" {
   description = "web server name"
   default     = "web-server-1"
 }
+
+variable "ttl_life" {
+  description = "TTL time in seconds"
+  default     = "30"
+}
+
+variable "web_domain" {
+  description = "Domain name"
+  default     = "millsresidence.com"
+}
+
+variable "web_domain2" {
+  description = "Domain name"
+  default     = "millsresidence.com"
+}
