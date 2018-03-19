@@ -2,3 +2,4 @@ ansible.cfg
 ansible
 cloud_init/
 inventory
+terraform_plan.tfplan
