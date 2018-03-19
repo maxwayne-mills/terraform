@@ -5,9 +5,9 @@
 
 tf = /home/cmills/bin/terraform
 planfile = terraform_plan.tfplan
-destroyfile = terraform_destroy.tfplan
 token=do_token=${DO_PAT}
 repo=https://github.com/maxwayne-mills/ansible.git
+repo_cloudinit=https://github.com/maxwayne-mills/cloud_init.git
 repodir=ansible
 
 .title:
@@ -19,7 +19,8 @@ repodir=ansible
 
 .clone:
 	@clear
-	if [ -d "$(repodir)" ]; then rm -rf "$(repodir)"; fi
+	@if [ -d "$(repodir)" ]; then rm -rf "$(repodir)"; fi
+	@if [ -d "$(repo_cloudinit)" ]; then rm -rf "$(repo_cloudinit)"; fi
 	@echo ""
 	@echo "Cloning config management"
 	@echo "========================="
@@ -27,13 +28,13 @@ repodir=ansible
 	@git clone $(repo)
 	@echo ""
 	@sleep 20
-	@echo "Copying Ansible configuration file"
-	@echo "=================================="
-	@echo ""
 	@cp ansible/ansible.cfg .
+	@echo "Copying cloudinit configuration files"
+	@echo "====================================="
+	@echo ""
+	@git clone $(repo_cloudinit)
 
 .check:
-	@echo ""
 	@echo "Checking terraform files for conformity and correctness"
 	@echo "======================================================="
 	@echo ""
@@ -45,7 +46,6 @@ repodir=ansible
 	@echo ""
 	@echo "Initializing"
 	@echo "============"
-	@echo ""
 	@@$(tf) init
 	@sleep 3
 
@@ -68,7 +68,7 @@ repodir=ansible
 	@if [ -d .terraform ]; then rm -rf .terraform; fi
 	@echo "cleanup completed"
 
-all: .title .int .check .clone .plan
+all: .title .clone .int .check .plan
 	@clear
 	@echo "Applying infrastructure"
 	@echo "======================="
@@ -77,6 +77,8 @@ all: .title .int .check .clone .plan
 
 update: .title .check 
 	@clear
+	@rm -rf ansible ansible.cfg
+	@git clone $(repo)
 	@echo "Updating infrastructure"
 	@echo "======================="
 	@echo ""
@@ -87,12 +89,20 @@ destroy: .title
 	@echo "Destroying environment"
 	@echo "======================"
 	@echo ""
-	@$(tf) destroy -var "do_token=${DO_PAT}"
+	@$(tf) destroy -force -var "do_token=${DO_PAT}"
+	@rm -rf .terraform
+	@rm terraform*
+	@if [ -f inventory ]; then rm inventory; fi
+	@rm -rf ansible
+	@rm -rf cloud_init
 	@echo "Cleaning up"
 	@echo ""
+
+show:
+	@$(tf) show
 
 clean: .cleanup
 
 validate: .int .check 
 
-plan: .plan
+plan: .int .plan

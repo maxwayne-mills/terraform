@@ -6,15 +6,7 @@ resource "digitalocean_droplet" "www1" {
   ssh_keys = ["${var.ssh_fingerprint}"]
 
   provisioner "local-exec" {
-    command = "sleep 20 && echo \"[webserver1]\n${digitalocean_droplet.www1.ipv4_address} ansible_connection=ssh ansible_ssh_user=root\" > inventory && ansible-playbook -i inventory ansible/roles/websrv/websrv.yml -e domain=millsresidence.com"
-  }
-
-  provisioner "local-exec" {
-    command = "sleep 20 && echo \"[webserver1]\n${digitalocean_droplet.www1.ipv4_address} ansible_connection=ssh ansible_ssh_user=root\" > inventory && ansible-playbook -i inventory ansible/roles/websrv/websrv.yml -e domain=toolsforthecloud.com"
-  }
-
-  provisioner "local-exec" {
-    command = "sleep 20 && echo \"[webserver1]\n${digitalocean_droplet.www1.ipv4_address} ansible_connection=ssh ansible_ssh_user=root\" > inventory && ansible-playbook -i inventory ansible/roles/websrv/websrv.yml -e domain=becomeonewiththecode.com"
+    command = "sleep 20 && echo \"[webserver1]\n${digitalocean_droplet.www1.ipv4_address} ansible_connection=ssh ansible_ssh_user=root\" > inventory && ansible-playbook -i inventory ansible/roles/httpd-domain-setup/httpd-domain-setup.yml -e domain_name=becomeonewiththecode.com"
   }
 }
 

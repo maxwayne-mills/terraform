@@ -43,7 +43,7 @@ variable "ttl_life" {
   default     = "30"
 }
 
-variable "web_domain" {
+variable "web_domain1" {
   description = "Domain name"
   default     = "millsresidence.com"
 }
@@ -51,4 +51,9 @@ variable "web_domain" {
 variable "web_domain2" {
   description = "Domain name"
   default     = "toolsforthecloud.com"
+}
+
+variable "web_domain3" {
+  description = "Domain name"
+  default     = "becomeonewiththecode.com"
 }

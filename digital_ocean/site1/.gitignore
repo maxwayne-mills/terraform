@@ -1,0 +1,4 @@
+ansible.cfg
+ansible
+cloud_init/
+inventory
