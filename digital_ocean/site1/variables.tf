@@ -57,3 +57,18 @@ variable "web_domain3" {
   description = "Domain name"
   default     = "becomeonewiththecode.com"
 }
+
+variable "web_domain4" {
+  description = "Domain name"
+  default     = "neatandfine.com"
+}
+
+variable "web_domain5" {
+  description = "Domain name"
+  default     = "clarencemills.com"
+}
+
+variable "web_domain6" {
+  description = "Domain name"
+  default     = "opensitesolutions.com"
+}
