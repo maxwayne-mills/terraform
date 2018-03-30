@@ -9,4 +9,9 @@ resource "scaleway_server" "test" {
   name  = "${var.server_name}"
   image = "${data.scaleway_image.platform.id}"
   type  = "${var.scaleway_type}"
+  state = "stopped"
+}
+
+resource "scaleway_ip" "platform_ip" {
+  server = "${scaleway_server.test.id}"
 }
