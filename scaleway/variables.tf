@@ -5,20 +5,21 @@ variable "region" {
 
 variable "scaleway_type" {
   description = "Type of Cloud image"
-  default     = "c1"
+  default     = "VC1S"
 }
 
+# obtain list of images using scw cli
 variable "image_os" {
   description = "Image name"
-  default     = "Ubuntu Precise" # obtain list of images using scw cli 
+  default     = "Ubuntu Xenial" 
 }
 
 variable "image_arch" {
   description = "Architecture"
-  default     = "arm"
+  default     = "x86_64"
 }
 
 variable "server_name" {
   description = "Server Name"
-  default     = "www-1"
+  default     = "srv-1"
 }

@@ -1,5 +1,5 @@
 # version: 1
-# Build Digital Ocean environment
+# Build Scaleway environment
 # Set DO_PAT variable by exporting digital ocean token into environmental variable
 # export DO_PAT="" 
 
