@@ -7,6 +7,6 @@
 # Don't include either the scaleway_organization or token within this file, 
 #read it from env variables. It will generate an error if you do.
 
-provider {
+provider "scaleway" {
   region = "${var.region}"
 }
