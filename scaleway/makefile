@@ -6,13 +6,12 @@
 tf = /home/cmills/bin/terraform
 planfile = terraform_plan.tfplan
 destroyfile = terraform_destroy.tfplan
-token=do_token=${DO_PAT}
 repo=https://github.com/maxwayne-mills/ansible.git
 repodir=ansible
 
 .title:
 	@clear
-	@echo "Manage Digital Ocean infrastructure"
+	@echo "Manage Scaleway infrastructure"
 	@echo "====================================="
 	@echo ""
 	@sleep 2
@@ -54,7 +53,7 @@ repodir=ansible
 	@echo "Create build plan to file"
 	@echo "========================="
 	@echo ""
-	@$(tf) plan -out=$(planfile) -var "do_token=${DO_PAT}"
+	@$(tf) plan -out=$(planfile)
 	@sleep 3
 
 .cleanup:
@@ -82,14 +81,14 @@ redo: .title .check
 	@echo "Applying infrastructure"
 	@echo "======================="
 	@echo ""
-	@$(tf) apply -var "do_token=${DO_PAT}"
+	@$(tf) apply 
 
 destroy: .title
 	@clear
 	@echo "Destroying environment"
 	@echo "======================"
 	@echo ""
-	@$(tf) destroy -var "do_token=${DO_PAT}"
+	@$(tf) destroy -var 
 	@echo "Cleaning up"
 	@echo ""
 
