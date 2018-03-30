@@ -76,7 +76,7 @@ all: .title .int .check .clone .plan
 	@echo ""
 	@$(tf) apply $(planfile)
 
-redo: .title .check 
+apply: .title .check 
 	@clear
 	@echo "Applying infrastructure"
 	@echo "======================="
@@ -88,8 +88,9 @@ destroy: .title
 	@echo "Destroying environment"
 	@echo "======================"
 	@echo ""
-	@$(tf) destroy -var 
-	@echo "Cleaning up"
-	@echo ""
+	@$(tf) destroy 
+
+show:
+	@$(tf) show
 
 clean: .cleanup
