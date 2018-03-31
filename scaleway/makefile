@@ -63,8 +63,8 @@ repodir=ansible
 	@if [ -d $(repodir) ]; then rm -rf $(repodir); fi
 	@if [ -f ansible.cfg ]; then rm ansible.cfg; fi
 	@if [ -f inventory ]; then rm inventory; fi
-	@if [ -f "*.tfplan" ]; then rm *.tfplan.*; fi
-	@if [ -f "*.tfstate" ]; then rm *.tfstate*; fi
+	@if [ -f "*.tfplan*" ]; then rm *.tfplan.*; fi
+	@if [ -f "*.tfstate*" ]; then rm *.tfstate*; fi
 	@if [ -d ".terraform" ]; then rm -rf .terraform; fi
 	@echo ""
 	@echo "cleanup completed"
