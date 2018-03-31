@@ -94,3 +94,5 @@ show:
 	@$(tf) show
 
 clean: .cleanup
+
+clone: .clone
