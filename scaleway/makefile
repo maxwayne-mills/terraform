@@ -45,7 +45,7 @@ repodir=ansible
 	@echo "Initializing"
 	@echo "============"
 	@echo ""
-	@@$(tf) init
+	@@$(tf) init -input=false
 	@sleep 3
 
 .plan: 
@@ -74,7 +74,8 @@ all: .title .int .check .clone .plan
 	@echo "Applying infrastructure"
 	@echo "======================="
 	@echo ""
-	@$(tf) apply $(planfile)
+	#@$(tf) apply $(planfile)
+	@$(tf) apply -input=false -auto-approve
 
 apply: .title .check 
 	@clear
@@ -88,7 +89,7 @@ destroy: .title
 	@echo "Destroying environment"
 	@echo "======================"
 	@echo ""
-	@$(tf) destroy 
+	@$(tf) destroy --force
 
 show:
 	@$(tf) show
