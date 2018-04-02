@@ -89,7 +89,7 @@ destroy: .title
 	@echo "Destroying environment"
 	@echo "======================"
 	@echo ""
-	@$(tf) destroy --force
+	@$(tf) destroy --force -auto-approve
 
 show:
 	@$(tf) show
