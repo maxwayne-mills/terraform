@@ -14,18 +14,15 @@ repodir=ansible
 	@echo "Manage Scaleway infrastructure"
 	@echo "====================================="
 	@echo ""
-	@sleep 2
 
 .clone:
-	@clear
-	if [ -d "$(repodir)" ]; then rm -rf "$(repodir)"; fi
+	@if [ -d "$(repodir)" ]; then rm -rf "$(repodir)"; fi
 	@echo ""
 	@echo "Cloning config management"
 	@echo "========================="
 	@echo ""
-	@git clone $(repo)
+	@git clone --depth=1 $(repo)
 	@echo ""
-	@sleep 20
 	@echo "Copying Ansible configuration file"
 	@echo "=================================="
 	@echo ""
@@ -46,7 +43,6 @@ repodir=ansible
 	@echo "============"
 	@echo ""
 	@@$(tf) init -input=false
-	@sleep 3
 
 .plan: 
 	@echo ""
@@ -54,9 +50,9 @@ repodir=ansible
 	@echo "========================="
 	@echo ""
 	@$(tf) plan -out=$(planfile)
-	@sleep 3
 
 .cleanup:
+	@echo ""
 	@echo "Cleaning up local environment"
 	@echo "============================="
 	@echo ""
@@ -70,22 +66,23 @@ repodir=ansible
 	@echo "cleanup completed"
 
 all: .title .int .check .clone .plan
-	@clear
+	@echo ""
 	@echo "Applying infrastructure"
 	@echo "======================="
 	@echo ""
 	#@$(tf) apply $(planfile)
 	@$(tf) apply -input=false -auto-approve
+	@make provision
 
 apply: .title .check 
-	@clear
+	@echo ""
 	@echo "Applying infrastructure"
 	@echo "======================="
 	@echo ""
 	@$(tf) apply 
 
 destroy: .title
-	@clear
+	@echo ""
 	@echo "Destroying environment"
 	@echo "======================"
 	@echo ""
@@ -97,3 +94,14 @@ show:
 clean: .cleanup
 
 clone: .clone
+
+provision:
+	@sleep 15
+	@echo ""
+	@echo "Provisioning with Ansible"
+	@echo "-------------------------"
+	@ansible-playbook ansible/roles/common/common.yml
+
+redo:
+	@make destroy && make 
+
