@@ -5,9 +5,10 @@
 
 tf = /home/cmills/bin/terraform
 planfile = terraform_plan.tfplan
-destroyfile = terraform_destroy.tfplan
 repo=https://github.com/maxwayne-mills/ansible.git
+shell_repo=https://github.com/maxwayne-mills/shell_scripts.git
 repodir=ansible
+shell_repo_dir=shell_scripts
 
 .title:
 	@clear
@@ -17,22 +18,25 @@ repodir=ansible
 
 .clone:
 	@if [ -d "$(repodir)" ]; then rm -rf "$(repodir)"; fi
+	@if [ -d "$(shell_repo_dir)" ]; then rm -rf "$(shell_repo_dir)"; fi
 	@echo ""
-	@echo "Cloning config management"
+	@echo "Cloning Ansible repository"
 	@echo "========================="
 	@echo ""
 	@git clone --depth=1 $(repo)
 	@echo ""
-	@echo "Copying Ansible configuration file"
+	@echo "Cloning Shell script repository"
 	@echo "=================================="
 	@echo ""
-	@cp ansible/ansible.cfg .
+	@git clone --depth=1 $(shell_repo)
+
+.config:
+	@shell_scripts/ansible_config_setup.sh
 
 .check:
 	@echo ""
 	@echo "Checking terraform files for conformity and correctness"
 	@echo "======================================================="
-	@echo ""
 	@$(tf) fmt
 	@$(tf) validate
 	@sleep 3
@@ -41,21 +45,18 @@ repodir=ansible
 	@echo ""
 	@echo "Initializing"
 	@echo "============"
-	@echo ""
 	@@$(tf) init -input=false
 
 .plan: 
 	@echo ""
 	@echo "Create build plan to file"
 	@echo "========================="
-	@echo ""
 	@$(tf) plan -out=$(planfile)
 
 .cleanup:
 	@echo ""
 	@echo "Cleaning up local environment"
 	@echo "============================="
-	@echo ""
 	@if [ -d $(repodir) ]; then rm -rf $(repodir); fi
 	@if [ -f ansible.cfg ]; then rm ansible.cfg; fi
 	@if [ -f inventory ]; then rm inventory; fi
@@ -69,7 +70,6 @@ all: .title .int .check .clone .plan
 	@echo ""
 	@echo "Applying infrastructure"
 	@echo "======================="
-	@echo ""
 	#@$(tf) apply $(planfile)
 	@$(tf) apply -input=false -auto-approve
 	@make provision
@@ -78,15 +78,16 @@ apply: .title .check
 	@echo ""
 	@echo "Applying infrastructure"
 	@echo "======================="
-	@echo ""
 	@$(tf) apply 
 
 destroy: .title
 	@echo ""
 	@echo "Destroying environment"
 	@echo "======================"
-	@echo ""
 	@$(tf) destroy --force -auto-approve
+	@rm -rf terraform*
+	@rm -rf ansible shell_scripts .terraform
+	@rm ansible.cfg inventory
 
 show:
 	@$(tf) show
@@ -99,9 +100,11 @@ provision:
 	@sleep 15
 	@echo ""
 	@echo "Provisioning with Ansible"
+	@make config
 	@echo "-------------------------"
 	@ansible-playbook ansible/roles/common/common.yml
 
-redo:
-	@make destroy && make 
+reload:
+	@make destroy && make
 
+config: .config
