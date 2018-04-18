@@ -11,7 +11,7 @@ variable "scaleway_type" {
 # obtain list of images using scw cli
 variable "image_os" {
   description = "Image name"
-  default     = "Ubuntu Xenial"
+  default     = "Ubuntu_Zesty"
 }
 
 variable "image_arch" {
