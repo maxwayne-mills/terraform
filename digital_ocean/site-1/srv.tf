@@ -31,7 +31,16 @@ resource "digitalocean_domain" "site" {
 */
 
 # Create A record for domain assigned to floating IP
-resource "digitalocean_domain" "site" {
-  name       = "www.fixyourip.com"
+resource "digitalocean_domain" "fixyourip" {
+  name       = "fixyourip.com"
   ip_address = "${digitalocean_floating_ip.srv1.id}"
 }
+
+resource "digitalocean_record" "fixyourip-mx" {
+  domain = "${digitalocean_domain.fixyourip.name}"
+  type = "A"
+  name = "www"
+  ttl = "05"
+  value = "${digitalocean_floating_ip.srv1.id}"
+}
+
