@@ -25,11 +25,13 @@ resource "digitalocean_record" "domain_record2" {
   value  = "${digitalocean_droplet.www1.ipv4_address}"
 }
 
+/*
 # Third domain 
 resource "digitalocean_domain" "domain_name3" {
   name       = "${var.web_domain3}"
   ip_address = "${digitalocean_droplet.www1.ipv4_address}"
 }
+
 
 resource "digitalocean_record" "domain_record3" {
   domain = "${digitalocean_domain.domain_name3.name}"
@@ -38,6 +40,7 @@ resource "digitalocean_record" "domain_record3" {
   ttl    = "${var.ttl_life}"
   value  = "${digitalocean_droplet.www1.ipv4_address}"
 }
+*/
 
 # Fourth domain 
 resource "digitalocean_domain" "domain_name4" {
@@ -47,20 +50,6 @@ resource "digitalocean_domain" "domain_name4" {
 
 resource "digitalocean_record" "domain_record4" {
   domain = "${digitalocean_domain.domain_name4.name}"
-  type   = "A"
-  name   = "www"
-  ttl    = "${var.ttl_life}"
-  value  = "${digitalocean_droplet.www1.ipv4_address}"
-}
-
-# Fifth domain 
-resource "digitalocean_domain" "domain_name5" {
-  name       = "${var.web_domain5}"
-  ip_address = "${digitalocean_droplet.www1.ipv4_address}"
-}
-
-resource "digitalocean_record" "domain_record5" {
-  domain = "${digitalocean_domain.domain_name5.name}"
   type   = "A"
   name   = "www"
   ttl    = "${var.ttl_life}"
