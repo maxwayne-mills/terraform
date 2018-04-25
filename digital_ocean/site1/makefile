@@ -9,6 +9,7 @@ token=do_token=${DO_PAT}
 repo=https://github.com/maxwayne-mills/ansible.git
 repo_cloudinit=https://github.com/maxwayne-mills/cloud_init.git
 repodir=ansible
+repo_cloudinit_dir=cloud_init
 
 .title:
 	@clear
@@ -20,19 +21,18 @@ repodir=ansible
 .clone:
 	@clear
 	@if [ -d "$(repodir)" ]; then rm -rf "$(repodir)"; fi
-	@if [ -d "$(repo_cloudinit)" ]; then rm -rf "$(repo_cloudinit)"; fi
+	@if [ -d "$(repo_cloudinit_dir)" ]; then rm -rf "$(repo_cloudinit_dir)"; fi
 	@echo ""
 	@echo "Cloning config management"
 	@echo "========================="
 	@echo ""
-	@git clone $(repo)
+	@git clone --depth=1 $(repo)
 	@echo ""
-	@sleep 20
 	@cp ansible/ansible.cfg .
 	@echo "Copying cloudinit configuration files"
 	@echo "====================================="
 	@echo ""
-	@git clone $(repo_cloudinit)
+	@git clone --depth=1 $(repo_cloudinit)
 
 .check:
 	@echo "Checking terraform files for conformity and correctness"
@@ -106,3 +106,8 @@ clean: .cleanup
 validate: .int .check 
 
 plan: .int .plan
+
+clone: .clone
+
+redo:
+	@tf refresh
