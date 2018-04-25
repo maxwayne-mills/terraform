@@ -1,5 +1,7 @@
 #!/bin/bash
 
 play=$(which ansible-playbook)
+domain=$1
+git_repo=$2
 
-$play ansible/playbooks/publish_website.yml -e "server_name=srv1 domain_name=becomeonewiththecode.com repo_name=https://github.com/clarencemills/becomeonewiththecode.com.git" -vv
+$play ansible/playbooks/publish_website.yml -e "server_name=srv1 domain_name=$domain repo_name=$git_repo" -vv
