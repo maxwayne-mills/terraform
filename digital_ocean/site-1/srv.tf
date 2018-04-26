@@ -13,7 +13,7 @@ resource "digitalocean_droplet" "srv1" {
 
   # Run shell script to install apache and deploy domain(s)
   provisioner "local-exec" {
-    command = "sleep 120 && ./execute_roles.sh"
+    command = "sleep 120 && shell_scripts/execute_roles.sh"
   }
 }
 
