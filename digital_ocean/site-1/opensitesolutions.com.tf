@@ -84,9 +84,12 @@ resource "digitalocean_record" "opensitesolutions-cname3" {
   value  = "ghs.googlehosted.com."
 }
 
+/*
 resource "digitalocean_record" "opensitesolutions-txt" {
   domain = "${digitalocean_domain.opensitesolutions.name}"
   type   = "TXT"
   ttl    = "300"
   value  = "v=spf1 a include:_spf.google.com ~all"
 }
+*/
+
