@@ -1,1 +1,3 @@
 ansible
+shell_scripts
+cloud_init/
