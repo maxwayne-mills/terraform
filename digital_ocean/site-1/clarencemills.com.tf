@@ -13,17 +13,17 @@ resource "digitalocean_record" "clarencemills-a" {
 }
 
 resource "digitalocean_record" "clarencemills-mx" {
-  domain = "${digitalocean_domain.clarencemills.name}"
-  type   = "MX"
-  ttl    = "${var.ttl_life}"
+  domain   = "${digitalocean_domain.clarencemills.name}"
+  type     = "MX"
+  ttl      = "${var.ttl_life}"
   priority = "10"
-  value  = "mailstore1.secureserver.net."
+  value    = "mailstore1.secureserver.net."
 }
 
 resource "digitalocean_record" "clarencemills_mx2" {
-  domain = "${digitalocean_domain.clarencemills.name}"
-  type   = "MX"
-  ttl    = "${var.ttl_life}"
+  domain   = "${digitalocean_domain.clarencemills.name}"
+  type     = "MX"
+  ttl      = "${var.ttl_life}"
   priority = "1"
-  value  = "smtp.secureserver.net."
+  value    = "smtp.secureserver.net."
 }
