@@ -33,32 +33,7 @@ variable "droplet_image" {
   default     = "ubuntu-14-04-x64"
 }
 
-variable "websrv_name" {
-  description = "web server name"
-  default     = "web-server-1"
-}
-
-variable "ttl_life" {
-  description = "TTL time in seconds"
-  default     = "30"
-}
-
-variable "web_domain1" {
-  description = "Domain name"
-  default     = "millsresidence.com"
-}
-
-variable "web_domain2" {
-  description = "Domain name"
-  default     = "toolsforthecloud.com"
-}
-
-variable "web_domain4" {
-  description = "Domain name"
-  default     = "neatandfine.com"
-}
-
-variable "web_domain6" {
-  description = "Domain name"
-  default     = "opensitesolutions.com"
+variable "tst-srv" {
+  description = "Test server"
+  default     = "tst-srv"
 }
