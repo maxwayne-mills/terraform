@@ -3,7 +3,7 @@
 # Set DO_PAT variable by exporting digital ocean token into environmental variable
 # export DO_PAT="" 
 
-tf = /home/cmills/bin/terraform
+tf=$(which terraform) 
 planfile = terraform_plan.tfplan
 token=do_token=${DO_PAT}
 repo=https://github.com/maxwayne-mills/ansible.git
