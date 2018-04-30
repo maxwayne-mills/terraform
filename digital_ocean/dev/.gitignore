@@ -3,3 +3,4 @@ ansible
 cloud_init/
 inventory
 terraform_plan.tfplan
+shell_scripts
